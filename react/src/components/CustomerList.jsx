@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import '../App.css';
 
 const List = (props) => {
-    const handleRowClick = (customer) => { console.log({customer}); props.setSelectedCustomer(customer)};
+    const handleRowClick = (customer) => { console.log({customer}); setHighlightedRow(customer.id); props.setSelectedCustomer(customer)};
+    const [highlightedRow, setHighlightedRow] = useState(null);
     return(
         <div>
             <h5><strong>Customer List</strong></h5>
@@ -16,8 +17,8 @@ const List = (props) => {
             </thead>
             <tbody>
                 {
-                    props.data.map((customer, index) =>(
-                        <tr key={index} onClick={() => handleRowClick(customer)}>
+                    props.data.map((customer) =>(
+                        <tr key={customer.id} onClick={() => handleRowClick(customer)} style={customer.id === highlightedRow? {fontWeight:'bold'} : null}>
                         <td>{customer.name}</td>
                         <td>{customer.email}</td>
                         <td>{customer.password}</td>
