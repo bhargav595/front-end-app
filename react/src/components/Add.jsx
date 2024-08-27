@@ -4,7 +4,7 @@ import '../index.css'
 
 const Update = (props) => {
     const handleDelete = () => { console.log('in handleDelete()'); };
-    const handleSave = () => { console.log('in handleSave()'); };
+    const handleSave = () => { console.log('in handleSave()');  };
     const handleCancel = () => { console.log('in handleCancel()'); };
     return (
         <div>

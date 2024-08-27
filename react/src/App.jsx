@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState, useEffect } from "react";
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -8,22 +8,41 @@ import "bootstrap/dist/js/bootstrap.js";
 
 import CustomerList from './components/CustomerList'
 import Update from './components/Update'
-import customerlist from './assets/list.json'
+import './memdb.js';
+import { getAll } from "./memdb.js";
+// import customerlist from './assets/list.json'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedCustomer, setSelectedCustomer] = useState({
+    name: '',
+    email: '',
+    pass: ''
+  });
+  const [customerlist, setCustomerlist] = useState([]);
+  const getCustomerList = function(){
+    setCustomerlist(getAll);
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            getCustomerList();
+        } catch (error) {
+            console.error('Error fetching socks:', error);
+        }
+    };
 
+    fetchData();
+}, []);
   return (
     <>
-      <div className='card'>
-        <CustomerList data={customerlist}/>
+      <div className='container'>
+        <div className='card-contain'>
+          <CustomerList data={customerlist}  setSelectedCustomer={setSelectedCustomer}/>
+        </div>
+        <div className='card-contain'>
+          <Update customer={selectedCustomer}/>
+        </div>
       </div>
-      <div className='card'>
-        <Update />
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }

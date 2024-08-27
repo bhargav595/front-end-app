@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import '../App.css';
 
 const List = (props) => {
+    const handleRowClick = (customer) => { console.log({customer}); props.setSelectedCustomer(customer)};
     return(
         <div>
             <h5><strong>Customer List</strong></h5>
-            <table className="table">
+            <table id="list" className="table">
             <thead>
                 <tr>
                 <th>Name</th>
@@ -14,11 +16,11 @@ const List = (props) => {
             </thead>
             <tbody>
                 {
-                    props.data.map(customer =>(
-                        <tr>
+                    props.data.map((customer, index) =>(
+                        <tr key={index} onClick={() => handleRowClick(customer)}>
                         <td>{customer.name}</td>
                         <td>{customer.email}</td>
-                        <td>{customer.pass}</td>
+                        <td>{customer.password}</td>
                         </tr>
                     ))
                 }
