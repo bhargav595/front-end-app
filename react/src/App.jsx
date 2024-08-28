@@ -16,26 +16,17 @@ function App() {
   const [selectedCustomer, setSelectedCustomer] = useState(blankCustomer);
   const [customerlist, setCustomerlist] = useState([]);
   const getCustomerList = function(){
-    setCustomerlist(getAll);
+    setCustomerlist(getAll());
+    console.log(customerlist);
   };
-  useEffect(() => {
-    const fetchData = async () => {
-        try {
-            getCustomerList();
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
-    fetchData();
-}, []);
 
-  const onClickDelete = function(){
+  useEffect(getCustomerList, []);
+
+  const onClickDelete = function(event){
     console.log(selectedCustomer);
-    console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'); 
-    console.log(getAll);
-    console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'); 
     deleteById(selectedCustomer.id);
-    setCustomerlist(getAll);
+    setSelectedCustomer(blankCustomer);
+    event.preventDefault();
   }
 
   return (

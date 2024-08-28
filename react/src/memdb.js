@@ -38,6 +38,7 @@ export function deleteById(id) {
   let arrayIndex = getArrayIndexForId(id);
   if( arrayIndex >= 0 && arrayIndex < items.length){
     items.splice(arrayIndex, 1);
+    console.log('Deletetd by ID');
   }
 }
 
