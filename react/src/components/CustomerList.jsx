@@ -2,7 +2,24 @@ import React, { useState } from "react";
 import '../App.css';
 
 const List = (props) => {
-    const handleRowClick = (customer) => { console.log({customer}); setHighlightedRow(customer.id); props.setSelectedCustomer(customer)};
+    const blankCustomer = {
+        id: '',
+        name: '',
+        email: '',
+        pass: ''
+      };
+    const handleRowClick = (customer) => { 
+        if(highlightedRow == customer.id){
+            console.log('Empty');
+            setHighlightedRow(null);
+            props.setSelectedCustomer(blankCustomer);
+        }
+        else{
+            console.log(customer);
+            setHighlightedRow(customer.id);
+            props.setSelectedCustomer(customer);
+        }
+    };
     const [highlightedRow, setHighlightedRow] = useState(null);
     return(
         <div>

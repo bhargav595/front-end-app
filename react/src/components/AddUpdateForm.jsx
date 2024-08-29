@@ -4,11 +4,19 @@ import '../index.css';
 import '../memdb.js';
 import { deleteById, getAll, put } from "../memdb.js";
 
-const Update = (props) => {
-    const disableDelete = props.mode == "Add" ? true : false;
+const Form = (props) => {
+    const handleSave = () => { 
+        console.log('in handleSave()'); 
+        console.log(inputName);
+    };
+    const handleCancel = () => { console.log('in handleCancel()'); };
+    const inputName = useRef(null);
+    const inputEmail = useRef(null);
+    const inputPassword = useRef(null);
+    
     return (
         <div>
-            <h5> {props.mode} </h5>
+            <h5>Update</h5>
             <form>
                 <table>
                     <tbody>
@@ -18,20 +26,20 @@ const Update = (props) => {
                         </tr>
                         <tr>
                             <td> <label htmlFor='email'>Email: </label> </td>
-                            <td> <input type='text' id='email' defaultValue={props.customer.email} onChange={(event) => props.handleInputChange(event)} placeholder='name@company.com'></input></td>
+                            <td> <input type='text' id='email' defaultValue={props.customer.email} ref={inputEmail} placeholder='name@company.com'></input></td>
                         </tr>
                         <tr>
                             <td> <label htmlFor='password'>Password: </label> </td>
-                            <td> <input type='text' id='password' defaultValue={props.customer.password} onChange={(event) => props.handleInputChange(event)} placeholder='password'></input></td>
+                            <td> <input type='text' id='password' defaultValue={props.customer.password} ref={inputPassword} placeholder='password'></input></td>
                         </tr>
                     </tbody>
                 </table>
-                <button onClick={props.onClickDelete} disabled={disableDelete}>Delete</button>
-                <button onClick={props.onClickSave}>Save</button>
-                <button onClick={props.onClickCancel}>Cancel</button>
+                <button onClick={props.onClickDelete}>Delete</button>
+                <button onClick={handleSave}>Save</button>
+                <button onClick={handleCancel}>Cancel</button>
             </form>
         </div>
     );
 };
 
-export default Update;
+export default Form;
