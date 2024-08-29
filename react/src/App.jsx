@@ -4,7 +4,8 @@ import './index.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import CustomerList from './components/CustomerList';
 import Update from './components/Update';
-import { deleteById, getAll, put, post} from "./memdb.js";
+// import { deleteById, getAll, put, post} from "./memdb.js";
+import { getAll, deleteById, post, put } from './restdb.js';
 
 function App() {
   const blankCustomer = {
@@ -16,14 +17,18 @@ function App() {
   const [selectedCustomer, setSelectedCustomer] = useState(blankCustomer);
   const [customerlist, setCustomerlist] = useState([]);
   
-  const getCustomerList = function(){
-    setCustomerlist(getAll());
-    console.log(customerlist);
-  };
+  // const getCustomerList = function(){
+  //   setCustomerlist(getAll());
+  // };
+
+  const getCustomerList = function () {
+    console.log("in getCustomers()");
+    getAll(setCustomerlist);
+  }
 
   useEffect(getCustomerList, []);
 
-  const mode = selectedCustomer.id == ''? "Add" : "Update";
+  const mode = selectedCustomer.id >= 0 ? "Add" : "Update";
 
   const handleInputChange = function(event){
     const {id, value} = event.target;
@@ -34,17 +39,20 @@ function App() {
   }
 
   const onClickDelete = function(event){
-    deleteById(selectedCustomer.id);
+    const postOpCallback = () => { setSelectedCustomer(blankCustomer); }
+    if (selectedCustomer.id >= 0) {
+    deleteById(selectedCustomer.id, postOpCallback);
+    } else {
     setSelectedCustomer(blankCustomer);
+    }
     event.preventDefault();
   }
 
   const onClickSave = function(event){
     console.log('In onClickSave');
-    console.log(selectedCustomer);
+    const postOpCallback = () => { setSelectedCustomer(blankCustomer); }
     if(mode == "Add"){
-      post(selectedCustomer);
-      setSelectedCustomer(blankCustomer);
+      post(selectedCustomer, postOpCallback);
       event.preventDefault();
     }
     else if(mode == "Update"){
