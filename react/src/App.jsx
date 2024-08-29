@@ -9,10 +9,10 @@ import { getAll, deleteById, post, put } from './restdb.js';
 
 function App() {
   const blankCustomer = {
-    id: '',
+    id: -1,
     name: '',
     email: '',
-    pass: ''
+    password: ''
   };
   const [selectedCustomer, setSelectedCustomer] = useState(blankCustomer);
   const [customerlist, setCustomerlist] = useState([]);
@@ -28,7 +28,7 @@ function App() {
 
   useEffect(getCustomerList, []);
 
-  const mode = selectedCustomer.id >= 0 ? "Add" : "Update";
+  const mode = selectedCustomer.id >= 0 ? "Update" : "Add";
 
   const handleInputChange = function(event){
     const {id, value} = event.target;
@@ -45,7 +45,6 @@ function App() {
     } else {
     setSelectedCustomer(blankCustomer);
     }
-    event.preventDefault();
   }
 
   const onClickSave = function(event){
@@ -53,12 +52,9 @@ function App() {
     const postOpCallback = () => { setSelectedCustomer(blankCustomer); }
     if(mode == "Add"){
       post(selectedCustomer, postOpCallback);
-      event.preventDefault();
     }
     else if(mode == "Update"){
-      put(selectedCustomer.id, selectedCustomer);
-      setSelectedCustomer(blankCustomer);
-      event.preventDefault();
+      put(selectedCustomer, postOpCallback);
     }
   }
 

@@ -3,10 +3,10 @@ import '../App.css';
 
 const List = (props) => {
     const blankCustomer = {
-        id: '',
+        id: -1,
         name: '',
         email: '',
-        pass: ''
+        password: ''
       };
     const handleRowClick = (customer) => { 
         if(highlightedRow == customer.id){
